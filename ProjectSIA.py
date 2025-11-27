@@ -385,6 +385,14 @@ def init_ledger_separate():
         print(f"❌ Error: {str(e)}")
         return False
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/init-ledger-separate")
 def init_ledger_separate_route():
     """Route untuk inisialisasi database AR & AP"""
@@ -457,6 +465,14 @@ def send_otp_email(email_penerima, kode_otp):
         print(f"ERROR: Gagal mengirim email ke {email_penerima}. Alasan: {e}")
         return False # Gagal
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route('/toggle-sidebar')
 def toggle_sidebar():
     """
@@ -1009,6 +1025,14 @@ def render_consumer_page(title, content_html, username, initials, display_phone,
 # ==========================================
 # 1. ROUTE HALAMAN UTAMA (LANDING PAGE)
 # ==========================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/")
 def index():
     """
@@ -1497,6 +1521,14 @@ def index():
 # ==========================================
 # 2. ROUTE HALAMAN LOGIN (YANG TADI DI INDEX)
 # ==========================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/login-page")
 def login_page():
     # 1. Cek jika user sudah login (dan sesi masih valid)
@@ -1804,6 +1836,14 @@ def render_reset_password_page(username, error=None):
     """
     return render_template_string(html)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/forgot-password", methods=['GET', 'POST'])
 def forgot_password():
     """
@@ -1837,6 +1877,14 @@ def forgot_password():
 # ==========================================
 # ROUTE: RESET PASSWORD
 # ==========================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/reset-password", methods=['GET', 'POST'])
 def reset_password():
     """
@@ -1879,6 +1927,14 @@ def reset_password():
 # =========================
 # LOGIN
 # =========================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/login", methods=['POST'])
 def login():
     email = request.form['email']
@@ -2163,6 +2219,14 @@ def render_verify_otp_page(email_tujuan, error=None):
     """
     return render_template_string(html)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/verify-otp", methods=['GET', 'POST'])
 def verify_otp():
     # Cek apakah pengguna punya data OTP di session
@@ -2226,6 +2290,14 @@ def verify_otp():
     # PERHATIKAN: Di sini kita memanggil render_verify_otp_page (bukan form)
     return render_verify_otp_page(email_to_show)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     """Menangani halaman registrasi pengguna baru. Hanya boleh mendaftar sebagai consumer."""
@@ -2468,6 +2540,14 @@ def format_phone_indo(phone):
         return "+62" + clean_phone[1:]
     return clean_phone
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/logout")
 def logout():
     # Bersihkan session login utama
@@ -2484,6 +2564,14 @@ def logout():
 # =========================
 # ROUTE KONSUMEN
 # =========================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/home")
 def consumer_home():
     if session.get('role') != 'consumer':
@@ -2591,6 +2679,14 @@ def consumer_home():
     
     return render_consumer_page("Dashboard", content_html, username, initials, display_phone, stats, alert_html, active_menu="Dashboard")
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/consumer/transactions")
 def consumer_transactions_list():
     if session.get('role') != 'consumer':
@@ -2982,6 +3078,14 @@ def consumer_transactions_list():
 
     return render_consumer_page(status_display, content_html, username, initials, display_phone, stats_for_sidebar, alert_html, active_menu="Transaksi")
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/consumer/profile-settings", methods=['GET', 'POST'])
 def consumer_profile_settings():
     if session.get('role') != 'consumer':
@@ -3188,6 +3292,14 @@ def consumer_profile_settings():
     # Panggil render_consumer_page
     return render_consumer_page("Update Profil", content_html, current_username, initials, display_phone, stats_for_sidebar, alert_html, active_menu="Dashboard")
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/shop")
 def consumer_shop():
     # 1. Cek Akses Consumer
@@ -3564,6 +3676,14 @@ def consumer_shop():
     # 6. Render Menggunakan 'render_consumer_page' (Bukan render_page!)
     return render_consumer_page("Belanja", content_html, username, initials, display_phone, stats_for_sidebar, alert_html, active_menu="Belanja")
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/purchase", methods=['POST'])
 def purchase():
     #1. Cek Hak Akses
@@ -3736,6 +3856,14 @@ def get_admin_sidebar_html():
 # =========================
 # DASHBOARD ADMIN
 # =========================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin")
 def admin_dashboard():
     if session.get('role') != 'admin':
@@ -3852,6 +3980,14 @@ def admin_dashboard():
 # ==================================
 # DAFTAR AKUN
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/chart-of-accounts")
 def chart_of_accounts():
     """Menampilkan daftar akun dengan checkbox dan tombol."""
@@ -3912,6 +4048,14 @@ def chart_of_accounts():
     # Kirim pesan error ke render_page jika ada
     return render_page("Daftar Akun", body, sidebar_content=get_admin_sidebar_html(), error_message=error)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/transactions")
 def transactions_list():
     """Menampilkan daftar transaksi dengan 'Nomor' dan 'ID Jurnal' baru."""
@@ -3967,6 +4111,14 @@ def transactions_list():
     """
     return render_page("Daftar Transaksi", body, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/add-account", methods=['GET', 'POST'])
 def add_account():
     """Formulir untuk menambah akun baru secara manual."""
@@ -3995,6 +4147,14 @@ def add_account():
     # Jika method GET, tampilkan form
     return render_add_account_form()
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/delete-accounts", methods=['POST'])
 def delete_accounts():
     """Memproses penghapusan akun yang dipilih."""
@@ -4030,7 +4190,15 @@ def delete_accounts():
     else:
         # Jika sukses tanpa error, kembali bersih
         return redirect(url_for('chart_of_accounts'))
-    
+
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/opening-balance", methods=['GET', 'POST'])
 def opening_balance():
     """Halaman untuk menginput neraca saldo awal & Info Perusahaan secara manual"""
@@ -4706,6 +4874,14 @@ def render_add_account_form(error=None):
 # =========================
 #RIWAYAT TRANSAKSI
 # =========================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/delete-transactions", methods=['POST'])
 def delete_transactions():
     """
@@ -4750,6 +4926,14 @@ def delete_transactions():
 # ==================================
 # JURNAL UMUM (GENERAL JOURNAL)
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/general-journal", methods=["GET", "POST"])
 def general_journal():
     if session.get('role') != 'admin':
@@ -5147,6 +5331,14 @@ def general_journal():
     
     return render_page("Jurnal Umum", body, sidebar_content=get_admin_sidebar_html(), error_message=error_message)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/all-journals-detail")
 def all_journals_detail():
     """Menampilkan SEMUA detail jurnal dalam SATU TABEL seperti format jurnal umum"""
@@ -5332,6 +5524,14 @@ def all_journals_detail():
     return render_page("Semua Detail Jurnal", body, sidebar_content=get_admin_sidebar_html())
 
 # Tambahkan rute baru untuk menampilkan semua jurnal
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/all-journals")
 def all_journals():
     """Menampilkan SEMUA jurnal dalam satu halaman"""
@@ -5411,6 +5611,14 @@ def all_journals():
     
     return render_page("Semua Jurnal Umum", body, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/journal-detail/<int:journal_id>")
 def journal_detail(journal_id):
     """Menampilkan detail lengkap dari sebuah jurnal"""
@@ -5716,6 +5924,14 @@ def get_net_income(db):
     laba_rugi_bersih = total_pendapatan - total_beban
     return laba_rugi_bersih
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/ledger")
 def ledger():
     if session.get('role') != 'admin':
@@ -5771,7 +5987,15 @@ def ledger():
         acc_name = acc_name_row['account_name'] if acc_name_row else "Error"
         
         return render_page(f"Buku Besar - {acc_name}", body, sidebar_content=get_admin_sidebar_html())
-    
+
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/ledger-all")
 def ledger_all():
     """Rute BARU untuk menampilkan SEMUA buku besar sekaligus."""
@@ -5814,6 +6038,14 @@ def ensure_ledger_tables():
         print("📦 Membuat tabel ledger...")
         return init_ledger_separate()
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/ledger-ar", methods=['GET', 'POST'])
 def ledger_ar():
     """Buku Besar Pembantu Piutang (Account Receivable)"""
@@ -6202,6 +6434,14 @@ def ledger_ar():
     
     return render_page("Buku Besar Piutang (AR)", body, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/ledger-ap", methods=['GET', 'POST'])
 def ledger_ap():
     """Buku Besar Pembantu Utang (Account Payable)"""
@@ -6592,7 +6832,14 @@ def ledger_ap():
 # ==================================
 # ⿦ NERACA SALDO SETELAH BUKU BESAR
 # ==================================
-
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/trial-balance")
 def trial_balance():
     """Menampilkan Neraca Saldo berdasarkan saldo akhir dari Buku Besar (SEBELUM penyesuaian)"""
@@ -6800,6 +7047,14 @@ def trial_balance():
 # ==================================
 # JURNAL PENYESUAIAN
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/adjusting-entries", methods=['GET', 'POST'])
 def adjusting_entri():
     """Halaman untuk menginput jurnal penyesuaian dan penyusutan"""
@@ -7277,6 +7532,14 @@ def adjusting_entri():
 # ==================================
 # NERACA LAJUR
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/work-sheet")
 def work_sheet():
     """Halaman Neraca Lajur berdasarkan data dari Trial Balance (Sebelum Penyesuaian)"""
@@ -7740,6 +8003,14 @@ def work_sheet():
 # =========================
 # INVENTORY CARD
 # =========================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/inventory-journal")
 def inventory_journal():
     if session.get('role') != 'admin':
@@ -7885,6 +8156,14 @@ def generate_inventory_card_html(item_id, db):
     """
     return card_html
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/inventory-card")
 def inventory_card():
     if session.get('role') != 'admin':
@@ -8064,6 +8343,14 @@ def process_average_card(item_id, db):
     
     return table_rows, running_qty, running_cost
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/inventory-card-all")
 def inventory_card_all():
     """Rute BARU untuk menampilkan SEMUA kartu stok."""
@@ -8085,6 +8372,14 @@ def inventory_card_all():
         
     return render_page("Semua Kartu Stok", all_cards_html, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/inventory-tx", methods=['POST'])
 def inventory_tx():
     """Menangani input Beli (Purchase) dan Pakai (Use) dari Admin."""
@@ -8204,6 +8499,14 @@ def inventory_tx():
 # ==================================
 # LAPORAN RUGI LABA
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/income-statement")
 def income_statement():
     """Laporan Laba Rugi"""
@@ -8430,6 +8733,14 @@ def income_statement():
     
     return render_page("Laporan Laba Rugi", body, sidebar_content=get_admin_sidebar_html(), error_message=error_message)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/download/income-statement-excel")
 def download_income_statement_excel():
     """Membuat dan mengirim file .xlsx dari Laporan Laba Rugi."""
@@ -8578,6 +8889,14 @@ def download_income_statement_excel():
     )
 
 # DOWNLOAD LAPORAN LABA RUGI UNTUK LANDING PAGE
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/download-income-statement")
 def download_income_statement_public():
     """Download laporan laba rugi untuk publik (dari landing page)"""
@@ -8725,6 +9044,14 @@ def download_income_statement_public():
 # ==================================
 # PERUBAHAN MODAL
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/equity-change")
 def equity_change():
     """Laporan Perubahan Modal"""
@@ -8913,6 +9240,14 @@ def equity_change():
     
     return render_page("Laporan Perubahan Modal", body, sidebar_content=get_admin_sidebar_html(), error_message=error_message if 'error_message' in locals() else None)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/download/equity-change-excel")
 def download_equity_change_excel():
     """Membuat dan mengirim file .xlsx dari Laporan Perubahan Modal."""
@@ -8986,6 +9321,14 @@ def download_equity_change_excel():
 # ==================================
 # LAPORAN POSISI KEUANGAN
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/financial-position")
 def financial_position():
     """Laporan Neraca dengan Layout Sejajar (Aligned Footer)"""
@@ -9228,6 +9571,14 @@ def financial_position():
     
     return render_page("Laporan Posisi Keuangan", body, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/download/financial-position-excel")
 def download_financial_position_excel():
     """Membuat dan mengirim file .xlsx dari Laporan Posisi Keuangan (Neraca)"""
@@ -9474,6 +9825,14 @@ def download_financial_position_excel():
 # ==================================
 # LAPORAN JURNAL PENUTUP
 # ==================================
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/closing-entries", methods=['GET', 'POST'])
 def closing_entries():
     """Menangani perhitungan dan eksekusi Jurnal Penutup."""
@@ -9751,6 +10110,14 @@ def closing_entries():
 
         return redirect(url_for('general_journal', success="Jurnal Penutup telah berhasil dibuat!"))
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/process-manual-payment", methods=['POST'])
 def process_manual_payment():
     if session.get('role') != 'consumer': return redirect(url_for('index'))
@@ -9862,6 +10229,14 @@ def process_manual_payment():
     # Render halaman
     return render_page("", body)
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 # --- RUTE KHUSUS QRIS MANUAL ---
 @app.route("/purchase-manual-qris", methods=['POST'])
 def purchase_manual_qris():
@@ -9995,7 +10370,15 @@ def purchase_manual_qris():
     """
     
     return render_page("", body)
-    
+
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/verify-payments")
 def verify_payments():
     if session.get('role') != 'admin': return redirect(url_for('index'))
@@ -10119,6 +10502,14 @@ def verify_payments():
     """
     return render_page("Verifikasi Pembayaran", body, sidebar_content=get_admin_sidebar_html())
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/approve-payment/<order_id>", methods=['POST'])
 def approve_payment(order_id):
     if session.get('role') != 'admin': return redirect(url_for('index'))
@@ -10140,6 +10531,14 @@ def approve_payment(order_id):
         
     return redirect(url_for('verify_payments', error="Gagal verifikasi"))
 
+db_initialized = False
+@app.before_request
+def initialize_database():
+    global db_initialized
+    if not db_initialized:
+        print("MENJALANKAN INIT_DB() SEKALI...")
+        init_db()
+        db_initialized = True
 @app.route("/admin/reject-payment/<order_id>", methods=['POST'])
 def reject_payment(order_id):
     """Menolak pembayaran: Ubah status jadi 'rejected' (Gagal)"""
@@ -10160,13 +10559,7 @@ def reject_payment(order_id):
         
     return redirect(url_for('verify_payments', error="Gagal memproses penolakan."))
 
-@app.before_first_request
-def initialize_database():
-    print("MENJALANKAN INIT_DB()...")
-    init_db()
-
 # --- Menjalankan Aplikasi ---
 if __name__ == '__main__':
     init_db() 
     app.run(debug=True)
-
