@@ -10160,7 +10160,13 @@ def reject_payment(order_id):
         
     return redirect(url_for('verify_payments', error="Gagal memproses penolakan."))
 
+@app.before_first_request
+def initialize_database():
+    print("MENJALANKAN INIT_DB()...")
+    init_db()
+
 # --- Menjalankan Aplikasi ---
 if __name__ == '__main__':
     init_db() 
     app.run(debug=True)
+
